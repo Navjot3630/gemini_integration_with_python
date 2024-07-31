@@ -47,3 +47,6 @@ steps:
 images:
   - 'gcr.io/project897927-429912/ui:latest'
   - 'gcr.io/project897927-429912/flask:latest'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
