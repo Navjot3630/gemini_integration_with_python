@@ -1,0 +1,49 @@
+steps:
+# Step 1: Configure Docker to use the gcloud command-line tool as a credential helper
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args: ['gcloud', 'auth', 'configure-docker']
+
+# Step 2: Build the UI Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/project897927-429912/ui:latest', './UI']
+
+# Step 3: Build the Flask Docker image
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/project897927-429912/flask:latest', './flask']
+
+# Step 4: Push the UI Docker image to Google Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/project897927-429912/ui:latest']
+
+# Step 5: Push the Flask Docker image to Google Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/project897927-429912/flask:latest']
+
+# Step 6: Set up Kubernetes credentials
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  args:
+    - 'gcloud'
+    - 'container'
+    - 'clusters'
+    - 'get-credentials'
+    - 'navicluster'
+    - '--zone'
+    - 'us-central1-c'
+    - '--project'
+    - 'project897927-429912'
+
+# Step 7: Apply UI deployment and service
+- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+  args: ['apply', '-f', './k8s/ui-deployment.yaml']
+- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+  args: ['apply', '-f', './k8s/ui-service.yaml']
+
+# Step 8: Apply Flask deployment and service
+- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+  args: ['apply', '-f', './k8s/flask-deployment.yaml']
+- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+  args: ['apply', '-f', './k8s/flask-service.yaml']
+
+images:
+  - 'gcr.io/project897927-429912/ui:latest'
+  - 'gcr.io/project897927-429912/flask:latest'
