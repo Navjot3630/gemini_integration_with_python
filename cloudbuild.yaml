@@ -33,15 +33,15 @@ steps:
     - 'project897927-429912'
 
 # Step 7: Apply UI deployment and service
-- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/ui-deployment.yaml']
-- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/ui-service.yaml']
 
 # Step 8: Apply Flask deployment and service
-- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/flask-deployment.yaml']
-- name: 'gcr.io/google.com/cloudsdktool/kubectl'
+- name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/flask-service.yaml']
 
 images:
