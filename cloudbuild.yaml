@@ -35,14 +35,30 @@ steps:
 # Step 7: Apply UI deployment and service
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/ui-deployment.yaml']
+  env:
+    - 'CLOUDSDK_CONTAINER_CLUSTER=navicluster'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CORE_PROJECT=project897927-429912'
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/ui-service.yaml']
+  env:
+    - 'CLOUDSDK_CONTAINER_CLUSTER=navicluster'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CORE_PROJECT=project897927-429912'
 
 # Step 8: Apply Flask deployment and service
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/flask-deployment.yaml']
+  env:
+    - 'CLOUDSDK_CONTAINER_CLUSTER=navicluster'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CORE_PROJECT=project897927-429912'
 - name: 'gcr.io/cloud-builders/kubectl'
   args: ['apply', '-f', './k8s/flask-service.yaml']
+  env:
+    - 'CLOUDSDK_CONTAINER_CLUSTER=navicluster'
+    - 'CLOUDSDK_COMPUTE_ZONE=us-central1-c'
+    - 'CLOUDSDK_CORE_PROJECT=project897927-429912'
 
 images:
   - 'gcr.io/project897927-429912/ui:latest'
